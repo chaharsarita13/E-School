@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&family=Vampiro+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Vampiro+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&family=Vampiro+One&display=swap');
+
+// font-family: 'Urbanist', sans-serif;
+// font-family: 'Vampiro One', cursive;
+.addNewStudentContainer{
+    display: flex;
+    .leftSide{
+        width: 20%;
+        height: 100vh;
+    }
+    .rightSide{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100vh;
+        .navbar{
+            width: auto;
+        }
+        .studentListContainer{
+            width: auto;
+            border-radius: 22px;
+            background: #FFF;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            height: 100%;
+            max-height: 100%;
+            overflow: auto;
+            margin: 20px;
+            padding: 40px;
+            .topbar{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 20px;
+                border-bottom:2px solid #D9D9D9;
+                margin-bottom: 8px;
+                position: sticky;
+                top: -44px;
+                background: #FFF;
+                padding-top: 32px;
+                .search{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 311px;
+                    height: 47px;
+                    flex-shrink: 0;
+                    border-radius: 22px;
+                    border: 0.5px solid rgba(0, 0, 0, 0.30);
+                    background: #FFF;
+                    gap: 8px;
+                    .image{
+                        width: 24px;
+                        height: 24px;
+                        flex-shrink: 0;
+
+                    }
+                    .input{
+                        width: 230px;
+                        border: none;
+                        outline: none;
+                        color: #000;
+                        font-family: 'Urbanist', sans-serif;
+                        font-size: 16px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: 24px; /* 150% */
+
+                    }
+    
+                }
+                .rightBtn{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 20px;
+                    .edit{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 22px;
+                        width: 200px;
+                        background: rgba(144, 161, 253, 0.19);
+                        // box-shadow: 0px 20px 50px 0px rgba(55, 69, 87, 0.10);
+                        text-decoration: none;
+                        gap: 6px;
+                        .image{
+                            width: 20px;
+                            height: 20px;
+                        }
+                        .para{
+                            color: #000;
+                            font-family: 'Urbanist', sans-serif;
+                            font-size: 18px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: normal;
+                        }
+
+                    }
+                    .addNew{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        border-radius: 22px;
+                        width: 136px;
+                        border-radius: 22px;
+                        background: #90A1FD;
+                        // box-shadow: 0px 20px 50px 0px rgba(55, 69, 87, 0.10);
+                        text-decoration: none;
+                        gap: 6px;
+                        .image{
+                            width: 20px;
+                            height: 20px;
+                        }
+                        .para{
+                            color: #000;
+                            font-family: 'Urbanist', sans-serif;
+                            font-size: 18px;
+                            font-style: normal;
+                            font-weight: 600;
+                            line-height: normal;
+                        }
+
+                    }
+                }
+
+            }
+            table{
+                border-spacing: 0px !important;
+            }
+            .tableContainer{
+                width: 100%;
+                
+                .tableHeader{
+                    .header{
+                        color: rgba(0, 0, 0, 0.60);
+                        font-family: 'Urbanist', sans-serif;
+                        font-size: 20px;
+                        font-style: normal;
+                        font-weight: 600;
+                        line-height: 60px;
+                        border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+                        background: #FFF;
+
+                    }
+                }
+                .listItems{
+                    font-family: 'Urbanist', sans-serif;
+                    color: #000;
+                    font-size: 15px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 60px;
+                    text-align: center;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.30);
+                    background: #FFF;
+                }
+            }
+
+            .pagination{
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-top: 50px;
+
+                ul{
+                    list-style: none;
+                }
+                li{list-style:  none;
+                    // border: 1px solid black;
+                    width: 70px;
+                    height: 30px;
+                    border-radius: 8px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                }
+                .page-item{
+                    &.active{
+                        background: #90A1FD;
+                        // color: #000;
+                    }
+                    &.active:hover{
+                        background: #90A1FD;
+                        // color: #FFF;
+                        transition: all 400ms;
+                    }
+                    &.notActive{
+                        border: none;
+                    }
+                    &.notActive:hover{
+                        background: #90A1FD;
+                        // color: #FFF;
+                        transition: all 400ms;
+                    }
+                }
+                .page-link{
+                    font-size: 20px;
+                    text-decoration: none;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+
+                    &.prevNext{
+                        border: 1px solid gainsboro;
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 8px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    &.prevNext:hover{
+                        background-color: cadetblue;
+                        transition: all 400ms;
+                    }
+                    
+                }
+                .page-link:hover{
+                    color: #FFF;
+                    transition: all 300ms;
+                }
+            }
+
+            
+            
+            
+        }
+    }
+}
+

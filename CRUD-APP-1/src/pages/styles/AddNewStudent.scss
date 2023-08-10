@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Urbanist:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&family=Vampiro+One&display=swap');
+
+.addNewStudentContainer{
+    display: flex;
+    .leftSide{
+        width: 20%;
+        height: 100vh;
+    }
+    .rightSide{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+        height: 100vh;
+        .navbar{
+            width: auto;
+        }
+        .addStudent{
+            width: auto;
+            border-radius: 22px;
+            background: #FFF;
+            box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+            height: 100%;
+            max-height: 100%;
+            overflow: auto;
+            margin: 20px;
+            padding: 40px;
+            
+            .image{
+                width: 80px;
+                height: 80px;
+                flex-shrink: 0;
+                margin-bottom: 36px;
+            }
+            .nameSection{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 30px;
+                p{
+                    color: #2E353F;
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    margin-bottom: 8px;
+                }
+                .formRow{
+                    display: inline-flex;
+                    padding: 11px 15px 12px 15px;
+                    // padding: 4px 6px;
+                    justify-content: center;
+                    align-items: flex-start;
+                    width: 400px;
+                    border-radius: 8px;
+                    border: 1px solid var(--light-version-surface-border, #DDE2E8);
+                    background: #F8F8FF;
+                    .formInput{
+                        font-size: 18px;
+                        font-weight: 600;
+                        background: none;
+                        border: none;
+                        width: 100%;
+                        outline: none;
+                        color: var(--light-version-type-text-light, #727272);
+                        font-family:'DM Sans', sans-serif;
+                        font-size: 18px;
+                        font-style: normal;
+                        font-weight: 400;
+                        line-height: normal;
+                    }
+                    .inputImage{
+                        width: 18px;
+                        height: 18px;
+                    }
+                }
+            }
+            .details{
+                width: 100%;
+                height: 100px;
+                margin-bottom: 40px;
+                p{
+                    color: #2E353F;
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 16px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    margin-bottom: 8px;
+                }
+                .detailsInput{
+                    height: 80px;
+                    width: 98%;
+                    border-radius: 8px;
+                    outline: none;
+                    font-family: 'DM Sans', sans-serif;;
+                    border: 1px solid var(--light-version-surface-border, #DDE2E8);
+                    background: #F8F8FF;
+                    resize: none;
+                    padding: 10px;
+                }
+            }
+            .buttonContainer{
+                display: flex;
+                justify-content: flex-end;
+                .button{
+                    margin-right: 30px;
+                    margin-top: 30px;
+                    padding: 10px 35px;
+                    width: fit-content;
+                    text-decoration: none;
+                    border-radius: 8px;
+                    background: #90A1FD;
+                    color: #FFF;
+                    text-align: center;
+                    font-family: 'DM Sans', sans-serif;
+                    font-size: 20px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+
+            }
+            
+        }
+    }
+}
+
