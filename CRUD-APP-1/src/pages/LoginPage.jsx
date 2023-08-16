@@ -6,6 +6,8 @@ import passwordImage from "../images/passwordImage.svg";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import{useNavigate} from "react-router-dom";
+import {useDispatch} from 'react-redux';
+import {login} from '../redux/userSlice'
 
 import { Icon } from 'react-icons-kit';
 import {locked} from 'react-icons-kit/iconic/locked';
@@ -39,6 +41,8 @@ function LoginPage () {
     },[])
 
     axios.defaults.withCredentials = true;
+
+    const dispatch = useDispatch();
     const handleSubmit =(e)=>{
         e.preventDefault()
         axios.post('http://localhost:3001/login', {email, password})
@@ -60,6 +64,13 @@ function LoginPage () {
             }
         } )
         .catch(err => console.log(err))
+
+        dispatch(login({
+            email: email,
+            loggedIn : true,
+            // email : 
+        })
+        );
 
     }
     return(

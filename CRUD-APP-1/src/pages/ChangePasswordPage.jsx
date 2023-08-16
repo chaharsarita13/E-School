@@ -6,8 +6,7 @@ import Sidebar  from '../compnenets/Sidebar';
 import Navbar  from '../compnenets/Navbar';
 import{useNavigate} from "react-router-dom";
 import axios from 'axios';
-import './styles/ChangePasswordPage.scss'
-
+import './styles/ChangePasswordPage.scss';
 
 function ChangePasswordPage() {
 
@@ -31,6 +30,66 @@ function ChangePasswordPage() {
         .catch(err => console.log(err))
     },[])
 
+    const [profile, setProfile] = useState({});
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/getProfile' , {
+            withCredentials: true,
+          })
+          .then(response => setProfile(response.data))
+          .catch(error => console.error(error));
+    }, []);
+
+    console.log(profile);
+
+    const [password, setPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [valid , setValid] = useState(false);
+
+
+    const handlePassword = (event) => {
+
+        const validPassword = event.target.value;
+    
+        const hasLowercase = /[a-z]/.test(validPassword);
+        
+        const hasUppercase = /[A-Z]/.test(validPassword);
+        
+        const hasSpecialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/.test(validPassword);
+
+        const isValidPassword = hasLowercase && hasUppercase && hasSpecialChar && validPassword.length >= 8;
+    
+        setNewPassword(validPassword);
+        setValid(isValidPassword);
+      };
+
+    const handleChangePassword = () => {
+        
+
+        if(valid ==false){
+            alert("Password requirements not matched");
+        }
+
+        if (newPassword != confirmPassword ) {
+            alert("password not matched")
+            return
+        }
+
+        axios.post(
+        'http://localhost:3001/change-password',
+        { password, newPassword }
+        )
+        .then(response => {
+        console.log('Password changed successfully');
+        alert("Password Changed Successfully");
+        navigate("/DashboardPage")
+        })
+        .catch(error => {
+        console.error('Error changing password:', error);
+        });
+    };
+
 
     return(
         <div className="ChangePasswordContainer">
@@ -52,15 +111,22 @@ function ChangePasswordPage() {
                     <p className="subheading">Change your password.</p>
                     <div className="input">
                         <p className="inputHeading">Old Password</p>
-                        <input className="inpputText" placeholder="Old Password"/>
+                        <input className="inpputText" placeholder="Old Password"
+                            onChange={(e)=>{setPassword(e.target.value)}}
+                        />
                     </div>
                     <div className="input">
                         <p className="inputHeading">New Password</p>
-                        <input  className="inpputText" placeholder="New Password"/>
+                        <input  className="inpputText" placeholder="New Password"
+                            // onChange={(e)=>{setNewPassword(e.target.value)}}
+                            onChange={handlePassword}
+                        />
                     </div>
                     <div className="input">
                         <p className="inputHeading">Confirm Password</p>
-                        <input  className="inpputText" placeholder="Confirm Password"/>
+                        <input  className="inpputText" placeholder="Confirm Password"
+                            onChange={(e)=>{setConfirmPassword(e.target.value)}}
+                        />
                     </div>
                     
                     <div className="bulletList">
@@ -88,7 +154,7 @@ function ChangePasswordPage() {
                     <div >
                         <div className="button">
                             <Link className="cancel">Cancel</Link>
-                            <Link className="save" >Save</Link>
+                            <Link className="save" onClick={handleChangePassword} >Save</Link>
                         </div>
 
                     </div>

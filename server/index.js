@@ -28,15 +28,14 @@ const verifyUser = (req,res, next)=>{
     }else{
         jwt.verify(token, "jwt-secret-key", (err,decoded)=>{
             if(err) return res.json("Token is wrong")
+            // req.decoded = decoded;
             next();
             
         })
     }
 }
 
-// app.get('/dashboard',verifyUser, (req,res)=>{
-//     return res.json("Success");
-// })
+
 app.get('/getVerifiedUser',verifyUser, (req,res)=>{
     return res.json("Success");
 })
@@ -44,7 +43,7 @@ app.get('/getVerifiedUser',verifyUser, (req,res)=>{
 
 
 app.post('/register', async (req, res) => {
-    const { email, password } = req.body;
+    const { username , email, password } = req.body;
     
     try {
         const existingUser = await UserModel.findOne({ email });
@@ -52,9 +51,9 @@ app.post('/register', async (req, res) => {
         return res.json("Existing user");
         }
 
-        // Create a new user
+       
         const hashed = await bcrypt.hash(password, 10);
-        const newUser = new UserModel({ email, password:hashed });
+        const newUser = new UserModel({username, email, password:hashed });
         await newUser.save();
         res.json('Registration successful');
     } catch (error) {
@@ -77,6 +76,7 @@ app.post('/settings', (req, res) => {
     .catch(err=>res.json(err))
 })
 
+
 app.post('/login', (req, res) => {
     const {email,password} = req.body;
     UserModel.findOne({email: email})
@@ -85,7 +85,7 @@ app.post('/login', (req, res) => {
             bcrypt.compare(password, user.password , (err,response)=>{
                 if(err){ res.json("The password is incorrect")}
 
-                const token = jwt.sign({email: user.email}, "jwt-secret-key", {expiresIn:"1d"})
+                const token = jwt.sign({email: user.email , username : user.username , password : user.password , _id : user._id}, "jwt-secret-key", {expiresIn:"1d"})
                 res.cookie("token", token); 
                 if(response){res.json("Success") }
             })
@@ -178,42 +178,58 @@ app.get('/logout', (req,res)=>{
 })
 
 
-// app.get('/user-data', async (req, res) => {
-//     try {
-//     //   const userId = req.user.id; // Assuming user ID is available in req.user
-//         const mail = req.user.email
-//       const user = await UserModel.find({email : mail});
+  app.get('/getProfile', async (req, res) => {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ error: 'Unauthorized' });
   
-//       if (!user) {
-//         return res.status(404).json({ message: 'User not found' });
-//       }
-  
-//       return res.json({ user });
-//     } catch (error) {
-//       return res.status(500).json({ message: 'Error fetching user data', error: error.message });
-//     }
-// });
-
-app.post('/additional-data', async (req, res) => {
     try {
-      const { userId, data } = req.body;
-    //   const id = req.body.id
-      
-      const updatedUser = await UserModel.findByIdAndUpdate(
-        userId,
-        { $set: { additionalData: data } },
-        { new: true }
-      );
-  
-      if (!updatedUser) {
-        return res.json('User not found' );
-      }
-  
-      return res.json( 'Additional data added successfully');
+      const decodedUser = jwt.verify(token, "jwt-secret-key");
+      res.json(decodedUser);
     } catch (error) {
-      return res.json('Error adding additional data' );
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
     }
   });
+
+
+
+app.post('/change-password', async (req, res) => {
+    try {
+      const token = req.cookies.token; 
+      if (!token) {
+        return res.status(401).json({ error: 'Unauthorized' });
+      }
+  
+      const decoded = jwt.verify(token, "jwt-secret-key");
+      const userId = decoded._id; 
+      const user = await UserModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const { password, newPassword } = req.body;
+  
+      const passwordMatches = await bcrypt.compare(password, user.password);
+      if (!passwordMatches) {
+        return res.status(401).json({ error: 'Incorrect password' });
+      }
+  
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedNewPassword;
+      await user.save();
+  
+      res.json({ message: 'Password changed successfully' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Server error' });
+    }
+  });
+  
+
+
+
+
 
 
 app.listen(3001, () => {

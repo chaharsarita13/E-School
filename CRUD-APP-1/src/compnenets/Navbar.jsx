@@ -1,29 +1,69 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import settingSidebar from "../images/settingSidebar.svg";
 import upArrow from "../images/upArrow.svg";
 import profileImage from "../images/profileImage.svg";
 import globe from "../images/globe.svg";
 import keyIcon from "../images/keyIcon.svg";
-import logout from "../images/logout.svg";
+import logoutImage from "../images/logout.svg";
 import profileIcon from "../images/profileIcon.svg";
 import axios from 'axios';
-
+import {useDispatch, useSelector} from 'react-redux';
+import {logout, selectUser} from '../redux/userSlice'
+import{useNavigate} from "react-router-dom";
 import './styles/Navbar.scss'
 
 function Navbar({path , imageUrl, username}){
-    username="Alma Lawson";
+
+    const navigate = useNavigate();
+
+    const user = useSelector(selectUser)
+    const [profile, setProfile] = useState({});
+    // username="Alma Lawson";
+    username= profile.username;
     imageUrl=profileImage;
+    const dispatch = useDispatch();
 
     const [showProfile, setShowProfile] = useState(false);
 
-    const handleLogout=()=>{
+    const handleLogout=(e)=>{
+        e.preventDefault()
         axios.get('http://localhost:3001/logout')
         .then(res=>{
-            location.reload(true)
+            // location.reload(true)
+            navigate("/")
+
         })
         .catch(err => console.log(err));
+
+
+        // dispatch(logout());
+
+
     }
+
+    
+    // const [user, setUser] = useState({});
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/getProfile' , {
+            withCredentials: true,
+          })
+          .then(response => setProfile(response.data))
+          .catch(error => console.error(error));
+      }, []);
+
+      
+
+
+
+    // useEffect(() => {
+    //     axios.get('http://localhost:3001/getProfile')
+    //       .then(response => setUser(response.data))
+    //       .catch(error => console.error(error));
+    //   }, []);
+
+    // console.log(profile,"abc");
 
   return(
     
@@ -52,7 +92,7 @@ function Navbar({path , imageUrl, username}){
                 <p className="itemPara">Change Password</p>
             </Link>
             <Link to="/" className="items" onClick={handleLogout}> 
-                <img className="itemImage" src={logout}/>
+                <img className="itemImage" src={logoutImage}/>
                 <p className="itemPara">Log Out</p>
             </Link>
         </div>

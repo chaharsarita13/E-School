@@ -9,6 +9,8 @@ import Sidebar  from '../compnenets/Sidebar';
 import Navbar  from '../compnenets/Navbar';
 import axios from 'axios';
 import{useNavigate} from "react-router-dom"
+import Cookies from 'js-cookie';
+import { useCookies } from 'react-cookie';
 import './styles/AddNewStudent.scss'
 
 
@@ -36,24 +38,37 @@ function UpdateStudent() {
         .catch(err => console.log(err))
     },[])
 
-    const [additionalData, setAdditionalData] = useState('');
-    const [message, setMessage] = useState('');
 
-    const [userData, setUserData] = useState(null);
+    const [user, setUser] = useState({});
 
     useEffect(() => {
-        // Make an API call to fetch user data
-        axios.get('http://localhost:3001/user-data')
-        .then(response => {
-            setUserData(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching user data:', error);
-        });
-    }, []);
+        axios.get('http://localhost:3001/getProfile' , {
+            withCredentials: true,
+          })
+          .then(response => setUser(response.data))
+          .catch(error => console.error(error));
+      }, []);
+
+    console.log(user,"xxxxxx");
+
+    // const [additionalData, setAdditionalData] = useState('');
+    // const [message, setMessage] = useState('');
+
+    // const [userData, setUserData] = useState(null);
+
+    // useEffect(() => {
+    //     // Make an API call to fetch user data
+    //     axios.get('http://localhost:3001/user-data')
+    //     .then(response => {
+    //         setUserData(response.data);
+    //     })
+    //     .catch(error => {
+    //         console.error('Error fetching user data:', error);
+    //     });
+    // }, []);
 
 
-    console.log(userData,"zzzzzzzzzzz");
+    // console.log(userData,"zzzzzzzzzzz");
 
     const handleSubmit = async (e) => {
         e.preventDefault();

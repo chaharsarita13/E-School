@@ -18,6 +18,7 @@ function RegisterPage () {
     const navigate = useNavigate();
     const[email, setEmail]  = useState();
     const[password, setPassword]  = useState();
+    const[username, setUsername]  = useState();
     const[confirmPassword, setConfirmPassword]  = useState();
     const[type2, setType2]  = useState("password");
     const[type1, setType1] = useState("password")
@@ -46,7 +47,10 @@ function RegisterPage () {
 
         e.preventDefault()
         if(isValid){
-            if(email==null){
+            if(username == null){
+                alert("please fill your name")
+            }
+            else if(email==null){
                 alert("please fill your e-mail")
             }
             else if (password==null){
@@ -57,7 +61,7 @@ function RegisterPage () {
             }
             else if(password === confirmPassword && email!=null){
     
-                axios.post('http://localhost:3001/register', {email, password})
+                axios.post('http://localhost:3001/register', {username , email, password})
                 .then(res => {
                     console.log(res)
                     if(res.data === "Existing user"){
@@ -106,6 +110,14 @@ function RegisterPage () {
                 <div className="accountSection">
                     <form className='form' onSubmit={handleSubmit} >
                         <p className="formHeading2">Create Account</p>
+                        <div className="formRow">
+                            <input className="formInput" placeholder="User Name" 
+                            onChange={(e)=>{setUsername(e.target.value)}}
+                            // type="email"
+                        
+                            />
+                            {/* <img className="inputImage" src={emailLogo} /> */}
+                        </div>
                         <div className="formRow">
                             <input className="formInput" placeholder="Email" 
                             onChange={(e)=>{setEmail(e.target.value)}}
