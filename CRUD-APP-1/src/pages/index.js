@@ -6,3 +6,4 @@ export { default as StudentsPage } from './StudentsPage';
 export { default as Settings } from './Settings';
 export { default as DashboardPage } from './DashboardPage';
 export { default as UpdateStudent } from './UpdateStudent';
+export { default as Profile } from './Profile';

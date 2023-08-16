@@ -79,7 +79,7 @@
             .details{
                 width: 100%;
                 height: 100px;
-                margin-bottom: 40px;
+                margin-bottom: 80px;
                 p{
                     color: #2E353F;
                     font-family: 'DM Sans', sans-serif;
@@ -101,6 +101,139 @@
                     padding: 10px;
                 }
             }
+
+            // .customContainer{
+            //     width: 100%;
+            //     // height: 100%;
+            //     // height: 580px;
+            //     .customGroup{
+            //         height: 320px;
+            //         border-radius: 8px;
+            //         border: 0.5px solid rgba(0, 0, 0, 0.30);
+            //         background: #FFF;
+            //         padding: 20px;
+            //         margin-bottom: 30px;
+                    
+            //         max-height: 320px;
+            //         overflow: auto;
+            //         // overflow: scroll;
+            //         .groupText{
+            //             position: relative;
+            //             top: -34px;
+            //             background: #FFF;
+            //             padding: 0px 10px;
+            //             color: #575656;
+            //             font-family:'Urbanist', sans-serif;
+            //             font-size: 20px;
+            //             font-weight: 500;
+
+            //         }
+
+            //         .customSection{
+            //             // height: 50px;
+            //             height: 246px;
+            //             border-radius: 8px;
+            //             border: 1px solid var(--light-version-surface-border, #DDE2E8);
+            //             background: #F8F8FF;
+            //             padding: 10px 30px;
+            //             margin: 0px 30px;
+            //             .sectionText{
+            //                 color: #919EAB;
+            //                 font-family: 'Urbanist', sans-serif;
+            //                 font-size: 20px;
+            //                 font-weight: 400;
+            //                 position: relative;
+            //                 top: -24px;
+            //                 background: #FFF;
+            //                 padding: 0px 10px;
+            //             }
+            //         }
+            //     }
+            // }
+
+            .customContainer{
+                width: 100%;
+                .groupText{
+                    position: relative;
+                    top: 12px;
+                    left: 14px;
+                    background: #FFF;
+                    padding: 0px 10px;
+                    color: #575656;
+                    font-family:'Urbanist', sans-serif;
+                    font-size: 20px;
+                    font-weight: 500;
+
+                }
+                .customGroup{
+                    height: 320px;
+                    border-radius: 8px;
+                    border: 0.5px solid rgba(0, 0, 0, 0.30);
+                    background: #FFF;
+                    padding: 20px;
+                    margin-bottom: 30px;
+                    
+                    max-height: 320px;
+                    overflow: auto;
+                    
+                    .sectionText{
+                        color: #919EAB;
+                        font-family: 'Urbanist', sans-serif;
+                        font-size: 20px;
+                        font-weight: 400;
+                        position: relative;
+                        top: 14px;
+                        left: 60px;
+                        background: #FFF;
+                        padding: 0px 10px;
+                    }
+
+                    .customSection{
+                        // height: 50px;
+                        // height: 246px;
+                        height: 204px;
+                        border-radius: 8px;
+                        border: 1px solid var(--light-version-surface-border, #DDE2E8);
+                        background: #F8F8FF;
+                        padding: 10px 30px;
+                        margin: 0px 30px;
+                        margin-bottom: 30px;
+                        padding: 30px;
+                        max-height: 204px;
+                        overflow: auto;
+
+                        .customLabel{
+                            display: flex;
+                            gap: 30px;
+                            align-items: center;
+                            margin-bottom: 20px;
+
+
+                            .labelText{
+                                color: #000;
+                                font-family: Urbanist;
+                                font-size: 16px;
+                                font-style: normal;
+                                font-weight: 400;
+                                line-height: normal;
+                            }
+
+                            .labelInput{
+                                border-radius: 8px;
+                                border: 1px solid var(--light-version-surface-border, #DDE2E8);
+                                background: #FFF;
+                                display: flex;
+                                width: 233px;
+                                padding: 11px 179px 12px 15px;
+                                align-items: center;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+
+
             .buttonContainer{
                 display: flex;
                 justify-content: flex-end;

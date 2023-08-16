@@ -8,7 +8,9 @@ import { Link } from 'react-router-dom';
 import Sidebar  from '../compnenets/Sidebar';
 import Navbar  from '../compnenets/Navbar';
 import axios from 'axios';
-import{useNavigate} from "react-router-dom"
+import{useNavigate} from "react-router-dom";
+import { Icon } from 'react-icons-kit';
+import {bin} from 'react-icons-kit/ikons/bin';
 import './styles/Settings.scss'
 
 
@@ -65,31 +67,16 @@ function Settings() {
 
     }
 
+    const tableHeader = ["Group", "Section", "Label", "Type","Action","Delete"]
 
-    const listData = [
-        {
-            id: "001",
-            firstName:"Sarita",
-            lastName:"Chahar",
-            dob:"10-10-10",
-        },
-        {
-            id: "001",
-            firstName:"Sarita",
-            lastName:"Chahar",
-            dob:"10-10-10",
-        },
-       
-        {
-            id: "001",
-            firstName:"Sarita",
-            lastName:"Chahar",
-            dob:"10-10-10",
-        },
-       ,
+    const handleDelete =(id)=>{
+        axios.delete('http://localhost:3001/getSettings/'+id)
+        .then(res =>{
+            location.reload();
+        })
+        .catch(err=>console.log(err))
         
-    ]
-    const tableHeader = ["Group", "Section", "Label", "Type","Action"]
+    }
     
 
     const [showProfile, setShowProfile] = useState(false);
@@ -107,7 +94,7 @@ function Settings() {
 
                 <div className="settings">
                     <div className="topbar">
-                        <p className="heading">Student’s Custom Fields</p>
+                        <p className="heading">Student's Custom Fields</p>
                         <Link  className="addNew" onClick={()=>setShowProfile(true)}>
                             <img className="image " src={plus}/>
                             <p className="para">Add New</p>
@@ -131,6 +118,10 @@ function Settings() {
                                     <td className="listItems">{item.label}</td> 
                                     <td className="listItems">{item.type}</td>   
                                     <td className="listItems"><Link><img src={actionIcon}/></Link></td> 
+                                    <td className="listItems">
+                                        <Icon  className="deleteButton" onClick={()=>handleDelete(item._id)} icon={bin} size={20}/>
+
+                                    </td> 
                                 </tr>
                                 )
                             })}

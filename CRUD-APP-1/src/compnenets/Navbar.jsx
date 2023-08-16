@@ -43,7 +43,7 @@ function Navbar({path , imageUrl, username}){
             </div>
         </div>
         <div className={`profileModal ${showProfile? "show": "hide"}`}>
-            <Link className="items"> 
+            <Link className="items" to="/Profile"> 
                 <img className="itemImage" src={profileIcon}/>
                 <p className="itemPara">Profile</p>
             </Link>

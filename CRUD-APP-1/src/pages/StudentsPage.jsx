@@ -7,6 +7,8 @@ import downArrow from "../images/downArrow.svg";
 import { Link } from 'react-router-dom';
 import Sidebar  from '../compnenets/Sidebar';
 import Navbar  from '../compnenets/Navbar';
+import { Icon } from 'react-icons-kit';
+import {bin} from 'react-icons-kit/ikons/bin';
 import axios from 'axios';
 import{useNavigate} from "react-router-dom";
 import './styles/StudentsPage.scss'
@@ -22,7 +24,7 @@ function StudentsPage() {
     useEffect(()=>{
         axios.get('http://localhost:3001/getVerifiedUser')
         .then(res => {
-            console.log(res)
+            // console.log(res)
             if(res.data === "Success"){
                 setAuth(true)
                 navigate("/StudentsPage")
@@ -48,6 +50,9 @@ function StudentsPage() {
         setStudents(response.data.students);
         setFiltered(response.data.students);
         setTotalCount(response.data.totalCount);
+        // console.log(students,'aaaa')
+        // console.log(filtered,'bbb')
+        // console.log('ccc')
     } catch (error) {
         console.error('Error fetching items:', error);
     }
@@ -69,15 +74,11 @@ function StudentsPage() {
     }
 
 
-    // const Filter =(e)=>{
-    //     setFiltered(students.filter(val => val.firstName?.toLowerCase().includes(e.target.value)))
-
-    // }
-    const tableHeader = ["ID", "First Name", "Last Name", "Date of Birth", "Class", "Parent's Name", "Address","Actions"]
+    const tableHeader = ["ID", "First Name", "Last Name", "Date of Birth", "Class", "Parent's Name", "Address","Actions" ,"DELETE"]
 
 
-    console.log(filtered,"aaaaaaaaa");
-    console.log(students,"bbbbbbbbbb");
+    // console.log(filtered,"aaaaaaaaa");
+    // console.log(students,"bbbbbbbbbb");
 
     const handlePrev =()=>{
         setCurrentPage((page)=>{
@@ -90,6 +91,16 @@ function StudentsPage() {
             if(page=== totalCount)return page;
             return page+1;
         })
+    }
+
+
+    const handleDelete =(id)=>{
+        axios.delete('http://localhost:3001/getStudentsForChart/'+id)
+        .then(res =>{
+            location.reload();
+        })
+        .catch(err=>console.log(err))
+        
     }
     
     return(
@@ -144,7 +155,11 @@ function StudentsPage() {
                                     <td className="listItems">{item.parents}</td>    
                                     <td className="listItems">{item.address}</td>  
                                     <td className="listItems">
-                                        <Link to={`/updateStudent/${item.id}`}><img src={actionIcon}/></Link>
+                                        <Link to={`/updateStudent/${item._id}`}><img src={actionIcon}/></Link>
+
+                                    </td> 
+                                    <td className="listItems">
+                                        <Icon  className="deleteButton" onClick={()=>handleDelete(item._id)} icon={bin} size={20}/>
 
                                     </td> 
                                 </tr>
@@ -208,6 +223,10 @@ export default StudentsPage;
 
 
 
+
+
+
+
 // import React , {useState, useEffect} from "react";
 // import plus from "../images/plus.svg";
 // import edit from "../images/edit.svg";
@@ -232,7 +251,7 @@ export default StudentsPage;
 //     useEffect(()=>{
 //         axios.get('http://localhost:3001/getVerifiedUser')
 //         .then(res => {
-//             console.log(res)
+//             // console.log(res)
 //             if(res.data === "Success"){
 //                 setAuth(true)
 //                 navigate("/StudentsPage")
@@ -244,58 +263,61 @@ export default StudentsPage;
 //         .catch(err => console.log(err))
 //     },[])
 
-
-
 //     const [students, setStudents] = useState([]);
 //     const [filtered,setFiltered]=useState([]);
+//     const [totalCount, setTotalCount] = useState(0);
+//     const [currentPage, setCurrentPage] = useState(1);
+//     useEffect(() => {
+//         fetchItems(currentPage);
+//       }, [currentPage]);
+    
+//     const fetchItems = async (page) => {
+//     try {
+//         const response = await axios.get(`http://localhost:3001/getStudents?page=${page}`);
+//         setStudents(response.data.students);
+//         setFiltered(response.data.students);
+//         setTotalCount(response.data.totalCount);
+//         // console.log(students,'aaaa')
+//         // console.log(filtered,'bbb')
+//         // console.log('ccc')
+//     } catch (error) {
+//         console.error('Error fetching items:', error);
+//     }
+//     };
 
-//     // useEffect(()=>{
-//     //     axios.get('http://localhost:3001/getStudents')
-//     //     .then(students => setStudents(students.data))
-//     //     .catch(err => console.log(err))
-//     // },[])
+
+//     const [seacrhData, setSearchData]=useState([])
 //     useEffect(()=>{
-//         axios.get('http://localhost:3001/getStudents')
-//         .then(students => {
-//             setStudents(students.data);
-//             // console.log(students)
-//             setFiltered(students.data);
+//         axios.get('http://localhost:3001/getStudentsForChart')
+//         .then(res => {
+//             setSearchData(res.data);
 //         })
 //         .catch(err => console.log(err))
 //     },[])
 
-    
 //     const Filter =(e)=>{
-//         setFiltered(students.filter(val => val.firstName?.toLowerCase().includes(e.target.value)))
+//         setFiltered(seacrhData.filter(val => val.firstName?.toLowerCase().includes(e.target.value)))
 
 //     }
-
-
-//     // console.log(filtered);
 
 
 //     const tableHeader = ["ID", "First Name", "Last Name", "Date of Birth", "Class", "Parent's Name", "Address","Actions"]
 
-//     const[currPage, setCurrPage] = useState(1);
-//     const recordsPerPage = 10;
-//     const lastIndex = currPage* recordsPerPage;
-//     const firstIndex = lastIndex - recordsPerPage;
-//     const records = filtered.slice(firstIndex, lastIndex);
-//     const npage = Math.ceil(filtered.length/recordsPerPage)
-//     const numbers = [...Array(npage +1).keys()].slice(1);
 
-//     const prevPage =()=>{
-//         if(currPage != 1){
-//             setCurrPage(currPage-1)
-//         }
+//     // console.log(filtered,"aaaaaaaaa");
+//     // console.log(students,"bbbbbbbbbb");
+
+//     const handlePrev =()=>{
+//         setCurrentPage((page)=>{
+//             if(page===1)return page;
+//             return page-1;
+//         })
 //     }
-//     const changePage =(id)=>{
-//         setCurrPage(id)
-//     }
-//     const nextPage =()=>{
-//         if(currPage != lastIndex){
-//             setCurrPage(currPage+1)
-//         }
+//     const handleNext =()=>{
+//         setCurrentPage((page)=>{
+//             if(page=== totalCount)return page;
+//             return page+1;
+//         })
 //     }
     
 //     return(
@@ -339,7 +361,7 @@ export default StudentsPage;
 //                             </tr>
 
                             
-//                             {records.map((item, index)=>{
+//                             {filtered.map((item, index)=>{
 //                                 return(
 //                                 <tr className="tableHeader" key={index}>
 //                                     <td className="listItems">{item.id}</td>
@@ -350,36 +372,26 @@ export default StudentsPage;
 //                                     <td className="listItems">{item.parents}</td>    
 //                                     <td className="listItems">{item.address}</td>  
 //                                     <td className="listItems">
-//                                         <Link to={`/updateStudent/${item.id}`}><img src={actionIcon}/></Link>
+//                                         <Link to={`/updateStudent/${item._id}`}><img src={actionIcon}/></Link>
 
 //                                     </td> 
 //                                 </tr>
 //                                 )
 //                             })}
 //                         </table>
-
-//                         <nav>
-//                             <ul className="pagination">
-//                                 <li className="page-item">
-//                                     <a href='#' className="page-link prevNext" onClick={prevPage}>prev</a>
-//                                 </li>
-//                                 {
-//                                     numbers.map((n,i)=>{
-//                                         return(
-//                                             <li className={`page-item ${currPage ===n ?'active':'notActive'}`} key={i}>
-//                                             <a href='#' className="page-link" onClick={()=>changePage(n)}>{n}</a>
-//                                         </li>
-//                                         )
-//                                     })
-//                                 }
-
-//                                 <li className="page-item ">
-//                                     <a href='#' className="page-link prevNext" onClick={nextPage}>next</a>
-//                                 </li>
-
-
-//                             </ul>
-//                         </nav>
+                            
+//                         <button
+//                             disabled={currentPage === 1}
+//                             onClick={handlePrev}
+//                             >
+//                             Previous
+//                             </button>
+//                             <button
+//                             disabled={currentPage *5 >= totalCount}
+//                             onClick={handleNext}
+//                             >
+//                             Next
+//                         </button>
 
 //                     </div>
 //                 </div>
@@ -392,7 +404,6 @@ export default StudentsPage;
 //     );
 //   };
 // export default StudentsPage;
-
 
 
 

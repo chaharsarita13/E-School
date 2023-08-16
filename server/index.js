@@ -12,7 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({
     origin: ["http://localhost:5173"],
-    methods : ["GET", "POST", "PUT"],
+    methods : ["GET", "POST", "PUT" , "DELETE"],
     credentials: true
 }))
 
@@ -41,39 +41,7 @@ app.get('/getVerifiedUser',verifyUser, (req,res)=>{
     return res.json("Success");
 })
 
-// app.post('/register', (req, res) => {
-//     UserModel.create(req.body)
-//     .then(users => res.json(users))
-//     .catch(err=>res.json(err))
-// })
 
-// app.post('/register', (req, res) => {
-//     UserModel.create(req.body)
-//     .then(users => res.json(users))
-//     .catch(err=>res.json(err))
-// })
-
-
-
-// app.post('/register', async (req, res) => {
-//     const { email, password } = req.body;
-
-//     try {
-//         // Check if the email is already registered
-//         const existingUser = await UserModel.findOne({ email });
-//         if (existingUser) {
-//         return res.json("Existing user");
-//         }
-
-//         // Create a new user
-//         const newUser = new UserModel({ email, password });
-//         await newUser.save();
-
-//         res.json('Registration successful');
-//     } catch (error) {
-//         res.json('Registration failed');
-//     }
-// });
 
 app.post('/register', async (req, res) => {
     const { email, password } = req.body;
@@ -109,24 +77,6 @@ app.post('/settings', (req, res) => {
     .catch(err=>res.json(err))
 })
 
-
-// app.post('/login', (req, res) => {
-//     const {email,password} = req.body;
-//     UserModel.findOne({email: email})
-//     .then(user=>{
-//         if(user){
-//             if(user.password === password){
-//                 const token = jwt.sign({email: user.email}, "jwt-secret-key", {expiresIn:"1d"})
-//                 res.cookie("token", token); 
-//                 res.json("Success")                
-//             }else{
-//                 res.json("The password is incorrect")
-//             }
-//         }else{
-//             res.json("No record existed")
-//         }
-//     })
-// })
 app.post('/login', (req, res) => {
     const {email,password} = req.body;
     UserModel.findOne({email: email})
@@ -146,15 +96,12 @@ app.post('/login', (req, res) => {
 })
 
 
-//////////////////////////////////////////
 
 app.get('/getStudentsForChart', (req,res)=>{
     StudentModel.find()
     .then(students=>res.json(students))
     .catch(err => res.json(err))
 })
-
-
 
 app.get('/getStudents', async (req, res) => {
     try {
@@ -173,20 +120,35 @@ app.get('/getStudents', async (req, res) => {
 
 
 
-/////////////////////////////////////////////
-
 app.get('/getStudents/:id', (req,res)=>{
     fetchid = req.params.id;
-    StudentModel.find({id:fetchid})
+    StudentModel.find({_id:fetchid})
     .then(students=>res.json(students))
     .catch(err => res.json(err))
 })
+
+app.delete('/getStudentsForChart/:id', (req,res)=>{
+    StudentModel.findByIdAndDelete(req.params.id)
+    // console.log(x,"sssss")
+    .then(res => res.json(res))
+    .catch(err =>  res.json(err))
+
+})
+
+app.delete('/getSettings/:id', (req,res)=>{
+    SettingModel.findByIdAndDelete(req.params.id)
+    // console.log(x,"sssss")
+    .then(res => res.json(res))
+    .catch(err =>  res.json(err))
+
+})
+
 
 
 app.put('/students/:id', (req, res) => {
     putid = req.params.id
     console.log(putid,"yyyyyyy");
-    StudentModel.findOneAndUpdate({id: putid},{
+    StudentModel.findOneAndUpdate({_id: putid},{
         $set:{
             firstName : req.body.firstName,
             lastName : req.body.lastName,
@@ -214,6 +176,44 @@ app.get('/logout', (req,res)=>{
     return res.json("Success")
 
 })
+
+
+// app.get('/user-data', async (req, res) => {
+//     try {
+//     //   const userId = req.user.id; // Assuming user ID is available in req.user
+//         const mail = req.user.email
+//       const user = await UserModel.find({email : mail});
+  
+//       if (!user) {
+//         return res.status(404).json({ message: 'User not found' });
+//       }
+  
+//       return res.json({ user });
+//     } catch (error) {
+//       return res.status(500).json({ message: 'Error fetching user data', error: error.message });
+//     }
+// });
+
+app.post('/additional-data', async (req, res) => {
+    try {
+      const { userId, data } = req.body;
+    //   const id = req.body.id
+      
+      const updatedUser = await UserModel.findByIdAndUpdate(
+        userId,
+        { $set: { additionalData: data } },
+        { new: true }
+      );
+  
+      if (!updatedUser) {
+        return res.json('User not found' );
+      }
+  
+      return res.json( 'Additional data added successfully');
+    } catch (error) {
+      return res.json('Error adding additional data' );
+    }
+  });
 
 
 app.listen(3001, () => {

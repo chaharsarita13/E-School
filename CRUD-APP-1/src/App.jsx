@@ -12,6 +12,7 @@ import {
   Settings,
   DashboardPage,
   UpdateStudent,
+  Profile
 } from './pages';
 import {Auth} from './compnenets'
 
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: '/authorizationFailed',
     element: <Auth/>
+  },
+  {
+    path: '/Profile',
+    element: <Profile/>
   },
 ]);
 
