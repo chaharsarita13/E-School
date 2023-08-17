@@ -39,36 +39,17 @@ function UpdateStudent() {
     },[])
 
 
-    const [user, setUser] = useState({});
+    
 
+    
+    const [profile, setProfile] = useState({});
     useEffect(() => {
         axios.get('http://localhost:3001/getProfile' , {
             withCredentials: true,
           })
-          .then(response => setUser(response.data))
+          .then(response => setProfile(response.data))
           .catch(error => console.error(error));
       }, []);
-
-    console.log(user,"xxxxxx");
-
-    // const [additionalData, setAdditionalData] = useState('');
-    // const [message, setMessage] = useState('');
-
-    // const [userData, setUserData] = useState(null);
-
-    // useEffect(() => {
-    //     // Make an API call to fetch user data
-    //     axios.get('http://localhost:3001/user-data')
-    //     .then(response => {
-    //         setUserData(response.data);
-    //     })
-    //     .catch(error => {
-    //         console.error('Error fetching user data:', error);
-    //     });
-    // }, []);
-
-
-    // console.log(userData,"zzzzzzzzzzz");
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,19 +83,21 @@ function UpdateStudent() {
                     <img className="image" src={avatar}/>
                     <div className="nameSection">
                         <div>
-                            <p>First Name</p>
+                            <p>Name</p>
                             <div className="formRow">
                                 <input className="formInput" placeholder="Enter First Name"
-                                    onChange={(e) => setAdditionalData(e.target.value)}
+                                    // onChange={(e) => setAdditionalData(e.target.value)}
+                                    value={profile.username}
                                 />
                                 <img className="inputImage" src={iconUser} />
                             </div>
                         </div>
                         <div>
-                            <p>Last Name</p>
+                            <p>Unique ID</p>
                             <div className="formRow">
                                 <input className="formInput" placeholder="Enter Last Name"
-                                    onChange={(e) => setAdditionalData(e.target.value)}
+                                    // onChange={(e) => setAdditionalData(e.target.value)}
+                                    value={profile._id}
                                 />
                                 <img className="inputImage" src={iconUser} />
                             </div>
@@ -130,11 +113,12 @@ function UpdateStudent() {
                             <div className="formRow">
                                 <input className="formInput" placeholder="Email"
                                     // onChange={e=>{setvalues({...values, parents : e.target.value})}}
+                                    value={profile.email}
                                 />
                                 <img className="inputImage" src={iconUser} />
                             </div>
                         </div>
-                        <div>
+                        {/* <div>
                             <p>Phone</p>
                             <div className="formRow">
                                 <input className="formInput" placeholder="Enter Phone"
@@ -142,14 +126,16 @@ function UpdateStudent() {
                                 />
                                 <img className="inputImage" src={iconUser} />
                             </div>
-                        </div>
+                        </div> */}
                         
 
                     </div>
                     
-                    <div className="buttonContainer">
+                    {/* <div className="buttonContainer">
                         <button  className="button"  onClick={handleSubmit}>Update</button>
-                    </div>
+                    </div> */}
+
+
                     {/* <div className="buttonContainer">
                         <button  className="button" onClick={handleDelete}>Delete</button>
                     </div> */}

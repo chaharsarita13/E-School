@@ -86,14 +86,6 @@ function UpdateStudent() {
         alert("Details updated Successfully")
     }
 
-    // const handleDelete =()=>{
-    //     axios.delete('http://localhost:3001/getStudentsForChart/'+id)
-    //     .then(res =>{
-    //         navigate("/StudentsPage")
-    //     })
-    //     .catch(err=>console.log(err))
-        
-    // }
 
     return(
         <div className="addNewStudentContainer">
@@ -217,9 +209,7 @@ function UpdateStudent() {
                     <div className="buttonContainer">
                         <button  className="button"  onClick={handleSubmit}>Update</button>
                     </div>
-                    {/* <div className="buttonContainer">
-                        <button  className="button" onClick={handleDelete}>Delete</button>
-                    </div> */}
+                    
                 </form>
                 
 

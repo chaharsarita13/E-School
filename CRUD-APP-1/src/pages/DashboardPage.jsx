@@ -21,7 +21,6 @@ function Dashboard() {
     useEffect(()=>{
         axios.get('http://localhost:3001/getVerifiedUser')
         .then(res => {
-            // console.log(res)
             if(res.data === "Success"){
                 setAuth(true)
                 navigate("/DashboardPage")
@@ -146,29 +145,12 @@ function Dashboard() {
         
     })
 
-    console.log(male1, female1 , "11111111");
-    console.log(male2, female2 , "222222");
-    console.log(male3, female3 , "3333");
-    console.log(male4, female4 , "44444444");
+    // console.log(male1, female1 , "11111111");
+    // console.log(male2, female2 , "222222");
+    // console.log(male3, female3 , "3333");
+    // console.log(male4, female4 , "44444444");
 
-    // const graphData = {
-    //      labels : ["class 1", "class 2",  "class 3", "class 4"],
-    //     datasets :[
-    //         {
-    //             label:"Male",
-    //             backgroundColor : "#90A1FD",
-    //             borderWidth : 1  ,
-    //             data :[male1,male2,male3,male4]
-    //         },
-    //         {
-    //             label:"Female",
-    //             backgroundColor : "#FEE0E8",
-    //             borderWidth : 1  ,
-    //             data :[female1,female2,female3, female4]
-    //         },
-    //     ]
-        
-    // }
+    
     const graphData = {
          labels : ["class 1", "class 2",  "class 3", "class 4","class 5", "class 6",  "class 7", "class 8","class 9", "class 10",  "class 11", "class 12"],
         datasets :[

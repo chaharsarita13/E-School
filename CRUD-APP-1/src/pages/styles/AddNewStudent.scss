@@ -231,6 +231,41 @@
                         
                     }
                 }
+
+                
+            }
+
+            .group{
+                border-radius: 8px;
+                border: 0.5px solid rgba(0, 0, 0, 0.30);
+                background: #FFF;
+                padding: 40px;
+                margin-bottom: 50px;
+                .groupHeading{
+                    position: relative;
+                    top: -50px;
+                    background: #FFF;
+                    padding: 0px 16px;
+                }
+                .section{
+                    border-radius: 8px;
+                    border: 1px solid var(--light-version-surface-border, #DDE2E8);
+                    background: #F8F8FF;
+                    margin-bottom: 50px;
+                    padding: 30px;
+                    .sectionHeading{
+                        position: relative;
+                        top: -40px;
+                        background: #FFF;
+                        padding: 0px 14px;
+                    }
+                    .label{
+                        display: flex;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 20px;
+                    }
+                }
             }
 
 

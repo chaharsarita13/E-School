@@ -50,7 +50,7 @@ function StudentsPage() {
         setStudents(response.data.students);
         setFiltered(response.data.students);
         setTotalCount(response.data.totalCount);
-        // console.log(students,'aaaa')
+        //  console.log(students,'aaaa')
         // console.log(filtered,'bbb')
         // console.log('ccc')
     } catch (error) {
@@ -77,8 +77,6 @@ function StudentsPage() {
     const tableHeader = ["ID", "First Name", "Last Name", "Date of Birth", "Class", "Parent's Name", "Address","Actions" ,"DELETE"]
 
 
-    // console.log(filtered,"aaaaaaaaa");
-    // console.log(students,"bbbbbbbbbb");
 
     const handlePrev =()=>{
         setCurrentPage((page)=>{
