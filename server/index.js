@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require("cors")
 const jwt = require('jsonwebtoken')
 const cookieParser = require('cookie-parser')
+const { check, validationResult } = require('express-validator');
 const UserModel = require('./models/User')
 const StudentModel = require("./models/Student")
 const SettingModel = require("./models/Setting")
@@ -41,8 +42,12 @@ app.get('/getVerifiedUser',verifyUser, (req,res)=>{
 })
 
 
+app.post('/register', [
+    check('username').notEmpty().isString(),
+    check('email').notEmpty().isString(),
+    check('password').notEmpty().isString(),
 
-app.post('/register', async (req, res) => {
+], async (req, res) => {
     const { username , email, password } = req.body;
     
     try {
@@ -64,13 +69,34 @@ app.post('/register', async (req, res) => {
 
 
 
-app.post('/students', (req, res) => {
+
+
+app.post('/students',[
+    check('firstName').notEmpty().isString(),
+    check('lastName').notEmpty().isString(),
+    check('id').notEmpty().isNumeric(),
+    check('dob').notEmpty().isString(),
+    check('classname').notEmpty().isNumeric(),
+    check('gender').notEmpty().isString(),
+    check('parents').notEmpty().isString(),
+    check('address').notEmpty().isString(),
+    check('details').notEmpty().isString(),
+    check('customFields').notEmpty().isObject(),
+], (req, res) => {
     StudentModel.create(req.body)
     .then(students => res.json(students))
-    .catch(err=>res.json(err))
+    .catch(err=>{
+        console.log(err);
+        res.json('failed');
+    })
 })
 
-app.post('/settings', (req, res) => {
+
+app.post('/settings',[
+    check('group').notEmpty().isString(),
+    check('section').notEmpty().isString(),
+    check('label').notEmpty().isString(),
+], (req, res) => {
     SettingModel.create(req.body)
     .then(settings => res.json(settings))
     .catch(err=>res.json(err))
@@ -158,7 +184,8 @@ app.put('/students/:id', (req, res) => {
             gender : req.body.gender,
             parents : req.body.parents,
             address : req.body.address,
-            details : req.body.details
+            details : req.body.details,
+            customFields: req.body.customField
         }
     })
     .then(result => res.json(result))

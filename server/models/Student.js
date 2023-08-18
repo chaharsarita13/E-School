@@ -3,13 +3,14 @@ const mongoose = require('mongoose')
 const StudentsSchema = new mongoose.Schema({
     firstName: String, 
     lastName: String, 
-    id : String,
+    id : Number,
     dob : String,
-    classname: String, 
+    classname: Number, 
     gender: String,
     parents: String,
     address: String,
     details: String,
+    customFields : Object,
     role: {
         type: String,
         default: "newStudent"
@@ -18,4 +19,7 @@ const StudentsSchema = new mongoose.Schema({
 
 const StudentModel = mongoose.model("students", StudentsSchema);
 module.exports = StudentModel;
+
+
+
 

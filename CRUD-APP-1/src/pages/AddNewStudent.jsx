@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, Fragment } from "react";
 import iconUser from "../images/iconUser.svg";
 import avatar from "../images/avatar.svg";
@@ -53,14 +54,19 @@ function AddNewStudent() {
         e.preventDefault()
 
         axios.post('http://localhost:3001/students', {
-            firstName, lastName, id, dob, classname, gender, parents, address, details
+            firstName, lastName, id, dob, classname, gender, parents, address, details, customFields
         })
         .then(res => {
             // console.log(res)
+            alert("Student added Successfully")
             navigate("/StudentsPage")
         } )
-        .catch(err => console.log(err))
-        alert("Student added Successfully")
+        .catch(err =>{
+            
+            console.log(err)
+            alert("Failed : Fill details according to the requirement")
+            
+        })
 
     }
 
@@ -106,17 +112,28 @@ function AddNewStudent() {
 
 
     const [groupedData, setGroupedData] = useState({});
-    const [inputValues, setInputValues] = useState({});
-    // console.log(inputValues);
+    const [customFields, setcustomFields] = useState({});
+    const handleInputChange = (group, section, label, newValue) => {
+        setcustomFields(prevcustomFields => ({
+          ...prevcustomFields,
+          [group]: {
+            ...prevcustomFields[group],
+            [section]: {
+              ...prevcustomFields[group]?.[section],
+              [label]: newValue
+            }
+          }
+        }));
+    };
+    const testButtonFunction=()=>{
+        console.log(customFields,'ssss')
+    }
+
 
     useEffect(() => {
         const newData = organizeData(customData);
         setGroupedData(newData);
-        // console.log(newData,"ttt");
-    }, []);
-    // const uniqueCustomGroup = [...new Set(customGroup)];
-    // const uniqueCustomSection = [...new Set(customSection)];
-    // const uniqueCustomLabel = [...new Set(customLabel)];
+    }, [organizeData]);
 
 
     return(
@@ -161,7 +178,7 @@ function AddNewStudent() {
                         <div>
                             <p>ID</p>
                             <div className="formRow">
-                                <input className="formInput" placeholder="Enter ID"
+                                <input className="formInput" placeholder="Enter ID (numeric value)"
                                     onChange={(e)=>{setId(e.target.value)}}
                                     required
                                 />
@@ -175,7 +192,6 @@ function AddNewStudent() {
                                     required
                                     type="date"
                                 />
-                                {/* <img className="inputImage" src={iconCalendar} /> */}
                             </div>
                         </div>
 
@@ -184,7 +200,7 @@ function AddNewStudent() {
                         <div>
                             <p>class</p>
                             <div className="formRow">
-                                <input className="formInput" placeholder="Enter Class"
+                                <input className="formInput" placeholder="Enter Class (numeric value)"
                                     onChange={(e)=>{setClassname(e.target.value)}}
                                     required
                                 />
@@ -238,7 +254,7 @@ function AddNewStudent() {
                         />
                     </div>
 
-                    <div id="abc">
+                    <div >
                         {Object.entries(groupedData).map(([group, sections]) => (
                             <div className="group" key={group}>
                                 <span className="groupHeading">{group}</span>
@@ -249,14 +265,8 @@ function AddNewStudent() {
                                             <div className="label" key = {label}>
                                                 <span className="labelHeading" >{label}</span>
                                                 <input className="labelInput" placeholder="date" 
-                                                     value={inputValues[label] || ''}
-                                                     onChange={(e) => {
-                                                         const newValue = e.target.value;
-                                                         setInputValues(prevInputValues => ({
-                                                             ...prevInputValues,
-                                                             [label]: newValue
-                                                         }));
-                                                     }}
+                                                    value={customFields?.[group]?.[section]?.[label] || ''}
+                                                    onChange={(e) => handleInputChange(group, section, label, e.target.value)}
                                                 />
                                             </div >
                                         ))}
@@ -265,10 +275,9 @@ function AddNewStudent() {
                             </div>
                         ))}
                     </div>
-
-
+                    
                     <div className="buttonContainer">
-                        <button  className="button">Add New Student</button>
+                        <button  className="button" onClick={testButtonFunction}>Add New Student</button>
                     </div>
                 </form>
 
@@ -280,5 +289,11 @@ function AddNewStudent() {
     );
   };
 export default AddNewStudent;
+
+
+
+
+
+
 
 
